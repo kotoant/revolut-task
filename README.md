@@ -15,10 +15,10 @@ Or use HTTPS:
 ```
 git clone https://github.com/kotoant/revolut-task.git
 ```
-Alternatively can just download [master.zip](https://github.com/kotoant/revolut-task/archive/master.zip "master.zip") and unzip it:
+Alternatively can just download [revolut-task-master.zip](https://github.com/kotoant/revolut-task/archive/master.zip) and unzip it:
 ```
-wget https://github.com/kotoant/revolut-task/archive/master.zip
-unzip master.zip
+wget https://github.com/kotoant/revolut-task/archive/master.zip -O revolut-task-master.zip
+unzip revolut-task-master.zip
 ```
 
 ## Build the project from the source code
