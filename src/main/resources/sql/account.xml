@@ -21,4 +21,8 @@
     <update id="update">
         update account set amount = #{account.amount} where id = #{account.id}
     </update>
+
+    <select id="ping" resultType="int">
+        select 1 from dual
+    </select>
 </mapper>

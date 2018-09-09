@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
+ * Represent response for {@link CreateAccountRequest} operation.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
  */
 public class CreateAccountResponse {

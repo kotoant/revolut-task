@@ -22,6 +22,5 @@
 
     <mappers>
         <mapper resource="sql/account.xml"/>
-        <!--TODO<mapper resource="sql/audit.xml"/>-->
     </mappers>
 </configuration>

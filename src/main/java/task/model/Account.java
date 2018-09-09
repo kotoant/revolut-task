@@ -33,7 +33,7 @@ public class Account {
     }
 
     /**
-     * Set accout id to the {@code id} value.
+     * Set account id to the {@code id} value.
      *
      * @param id value to set account id to
      * @return this account with updated id

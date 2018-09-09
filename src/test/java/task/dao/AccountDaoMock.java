@@ -30,4 +30,8 @@ public class AccountDaoMock implements AccountDao {
         accountsById.put(account.getId(), account);
     }
 
+    @Override
+    public int ping() {
+        return 1;
+    }
 }

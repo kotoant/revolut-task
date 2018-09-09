@@ -8,6 +8,8 @@ import javax.annotation.Nullable;
 import java.math.BigDecimal;
 
 /**
+ * Main application service that provides key account functionality and is exposed as REST HTTP service.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
  */
 public interface AccountService {

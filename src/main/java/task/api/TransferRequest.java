@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
+ * Represents request for transfer money from one account to another.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
  */
 public class TransferRequest {

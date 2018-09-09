@@ -19,6 +19,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * Thread safe implementation of {@link AccountService}. If several threads want to modify the same account they will be
+ * synchronized by lock for that particular account to prevent inconsistent state.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
  */
 @ThreadSafe
@@ -27,6 +30,8 @@ public class AccountServiceImpl implements AccountService {
     private final AccountManager accountManager;
     private final AccountDao accountDao;
 
+    // This cache keep locks per account id. Weak values guarantee that once the lock is unused the corresponding entity
+    // will be removed from the cache.
     private final Cache<Long, Lock> locksByAccountId = CacheBuilder.newBuilder()
             .weakValues() // to avoid memory leak
             .build();
@@ -75,6 +80,7 @@ public class AccountServiceImpl implements AccountService {
         final Account fromAccount = getAccount(fromAccountId);
         final Account toAccount = getAccount(toAccountId);
 
+        // this pre-check allows us to avoid extra database transaction: begin -> rollback in case of exceeded limit
         if (!fromAccount.canWithdraw(amount)) {
             throw new LimitExceededException(fromAccountId, amount, fromAccount.getAmount());
         }
@@ -83,6 +89,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private void threadSafeTransfer(long fromAccountId, long toAccountId, BigDecimal amount) {
+        // locks are ordered to avoid deadlocks
         final long firstId;
         final long secondId;
         if (fromAccountId < toAccountId) {

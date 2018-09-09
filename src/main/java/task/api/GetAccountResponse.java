@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 
 /**
+ * Represents response for get account operation.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
  */
 public class GetAccountResponse {

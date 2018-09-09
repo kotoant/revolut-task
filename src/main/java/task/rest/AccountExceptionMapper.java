@@ -11,6 +11,8 @@ import javax.ws.rs.ext.Provider;
 import java.util.Map;
 
 /**
+ * This class maps exception to {@link Response} with setting corresponding statuses for known exceptions.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
  */
 @Provider

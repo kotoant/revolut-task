@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
+ * This exception is thrown by {@link task.model.Account} or implementation of {@link task.service.AccountService}
+ * when someone tries to withdraw amount more than source account balance.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
  */
 public class LimitExceededException extends RuntimeException {
@@ -17,6 +20,10 @@ public class LimitExceededException extends RuntimeException {
         this.accountId = accountId;
         this.delta = Objects.requireNonNull(delta, "delta is null");
         this.amount = Objects.requireNonNull(amount, "amount is null");
+    }
+
+    public long getAccountId() {
+        return accountId;
     }
 
     public BigDecimal getDelta() {

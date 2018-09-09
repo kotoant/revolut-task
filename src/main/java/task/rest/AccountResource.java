@@ -1,7 +1,5 @@
 package task.rest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import task.api.CreateAccountRequest;
 import task.api.CreateAccountResponse;
 import task.api.GetAccountResponse;
@@ -21,12 +19,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
+ * This REST resource exposes {@link AccountService} API. Exceptions are handled by {@link AccountExceptionMapper}.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
+ * @see CreateAccountRequest
+ * @see CreateAccountResponse
+ * @see GetAccountResponse
+ * @see TransferRequest
+ * @see AccountExceptionMapper
  */
 @Path("/accounts")
 @Produces(MediaType.APPLICATION_JSON)
 public class AccountResource {
-    private static final Logger logger = LoggerFactory.getLogger(AccountResource.class);
 
     private final AccountService accountService;
 
@@ -35,6 +39,12 @@ public class AccountResource {
         this.accountService = accountService;
     }
 
+    /**
+     * Creates new account.
+     *
+     * @param request {@link CreateAccountRequest}
+     * @return {@link Response} with Status.CREATED status and {@link CreateAccountResponse} entity in case of success.
+     */
     @POST
     @Path("/create")
     public Response create(@Valid @NotNull CreateAccountRequest request) {
@@ -44,6 +54,12 @@ public class AccountResource {
                 .build();
     }
 
+    /**
+     * Get account with given {@code accountId}.
+     *
+     * @param accountId account id
+     * @return {@link Response} with Status.OK status and {@link GetAccountResponse} entity in case of success.
+     */
     @GET
     @Path("/{accountId}")
     public Response getAccount(@NotNull @PathParam("accountId") long accountId) {
@@ -53,6 +69,12 @@ public class AccountResource {
                 .build();
     }
 
+    /**
+     * Transfers money from one account to another.
+     *
+     * @param request {@link TransferRequest}
+     * @return {@link Response} with Status.OK status and "OK" entity in case of success.
+     */
     @POST
     @Path("/transfer")
     public Response transfer(@Valid @NotNull TransferRequest request) {

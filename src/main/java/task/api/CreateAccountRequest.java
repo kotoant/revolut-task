@@ -6,6 +6,8 @@ import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 
 /**
+ * Representation class for create account operation.
+ *
  * @author Anton Kotov (kotov-anton@yandex.ru)
  */
 public class CreateAccountRequest {
