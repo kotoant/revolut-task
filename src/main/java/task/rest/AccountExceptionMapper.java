@@ -22,6 +22,7 @@ public class AccountExceptionMapper implements ExceptionMapper<Exception> {
             ImmutableMap.<Class<? extends Exception>, Status>builder()
                     .put(LimitExceededException.class, Status.BAD_REQUEST)
                     .put(NoSuchAccountException.class, Status.NOT_FOUND)
+                    .put(IllegalArgumentException.class, Status.BAD_REQUEST)
                     .build();
 
     @Override

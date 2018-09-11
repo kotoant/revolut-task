@@ -49,9 +49,7 @@ public class AccountResource {
     @Path("/create")
     public Response create(@Valid @NotNull CreateAccountRequest request) {
         final Account account = accountService.create(request.getAmount());
-        return Response.status(Response.Status.CREATED)
-                .entity(new CreateAccountResponse(account.getId()))
-                .build();
+        return Response.ok(new CreateAccountResponse(account.getId())).build();
     }
 
     /**
@@ -64,9 +62,7 @@ public class AccountResource {
     @Path("/{accountId}")
     public Response getAccount(@NotNull @PathParam("accountId") long accountId) {
         final Account account = accountService.getAccount(accountId);
-        return Response.status(Response.Status.OK)
-                .entity(new GetAccountResponse(account.getId(), account.getAmount()))
-                .build();
+        return Response.ok(new GetAccountResponse(account.getId(), account.getAmount())).build();
     }
 
     /**
@@ -79,6 +75,6 @@ public class AccountResource {
     @Path("/transfer")
     public Response transfer(@Valid @NotNull TransferRequest request) {
         accountService.transfer(request.getFrom(), request.getTo(), request.getAmount());
-        return Response.status(Response.Status.OK).entity("OK").build();
+        return Response.ok("OK").build();
     }
 }

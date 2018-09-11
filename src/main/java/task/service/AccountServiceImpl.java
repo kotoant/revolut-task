@@ -1,7 +1,8 @@
 package task.service;
 
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import task.dao.AccountDao;
 import task.exception.LimitExceededException;
 import task.exception.NoSuchAccountException;
@@ -32,9 +33,14 @@ public class AccountServiceImpl implements AccountService {
 
     // This cache keep locks per account id. Weak values guarantee that once the lock is unused the corresponding entity
     // will be removed from the cache.
-    private final Cache<Long, Lock> locksByAccountId = CacheBuilder.newBuilder()
+    private final LoadingCache<Long, Lock> locksByAccountId = CacheBuilder.newBuilder()
             .weakValues() // to avoid memory leak
-            .build();
+            .build(new CacheLoader<Long, Lock>() {
+                @Override
+                public Lock load(Long key) throws Exception {
+                    return new ReentrantLock();
+                }
+            });
 
     @Inject
     public AccountServiceImpl(AccountManager accountManager, AccountDao accountDao) {
@@ -117,11 +123,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private Lock getOrCreateLock(long accountId) {
-        return locksByAccountId.asMap().computeIfAbsent(accountId, this::createLock);
+        return locksByAccountId.getUnchecked(accountId);
     }
-
-    private Lock createLock(Long key) {
-        return new ReentrantLock();
-    }
-
 }
