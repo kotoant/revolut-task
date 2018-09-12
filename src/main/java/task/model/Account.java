@@ -119,4 +119,22 @@ public class Account {
             throw new IllegalArgumentException("delta is negative or equals to zero: " + amount);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account account = (Account) o;
+
+        if (id != account.id) return false;
+        return amount != null ? account.amount != null && amount.compareTo(account.amount) == 0 : account.amount == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        return result;
+    }
 }

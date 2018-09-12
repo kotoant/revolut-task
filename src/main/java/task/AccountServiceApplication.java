@@ -37,7 +37,7 @@ import static org.apache.ibatis.io.Resources.getResourceAsReader;
 public class AccountServiceApplication extends Application<Configuration> {
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
-            args = new String[]{"server", "/resource-config.yaml"};
+            args = new String[]{"server", "/application-config.yaml"};
         }
         new AccountServiceApplication().run(args);
     }
