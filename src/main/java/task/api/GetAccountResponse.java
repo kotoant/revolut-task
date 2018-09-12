@@ -28,4 +28,22 @@ public class GetAccountResponse {
     public BigDecimal getAmount() {
         return amount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GetAccountResponse that = (GetAccountResponse) o;
+
+        if (accountId != that.accountId) return false;
+        return amount != null ? amount.equals(that.amount) : that.amount == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (accountId ^ (accountId >>> 32));
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        return result;
+    }
 }

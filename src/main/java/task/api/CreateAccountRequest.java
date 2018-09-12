@@ -26,4 +26,19 @@ public class CreateAccountRequest {
     public BigDecimal getAmount() {
         return amount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CreateAccountRequest that = (CreateAccountRequest) o;
+
+        return amount != null ? amount.equals(that.amount) : that.amount == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return amount != null ? amount.hashCode() : 0;
+    }
 }

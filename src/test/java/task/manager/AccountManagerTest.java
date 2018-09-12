@@ -17,9 +17,7 @@ public class AccountManagerTest {
     private AccountManager manager;
     @Mock
     private AccountDao accountDao;
-    @Mock
     private Account accountFrom;
-    @Mock
     private Account accountTo;
 
 

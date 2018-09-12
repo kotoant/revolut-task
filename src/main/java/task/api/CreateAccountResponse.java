@@ -20,4 +20,19 @@ public class CreateAccountResponse {
     public long getAccountId() {
         return accountId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CreateAccountResponse that = (CreateAccountResponse) o;
+
+        return accountId == that.accountId;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (accountId ^ (accountId >>> 32));
+    }
 }

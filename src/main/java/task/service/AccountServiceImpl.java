@@ -81,19 +81,6 @@ public class AccountServiceImpl implements AccountService {
         threadSafeTransfer(fromAccountId, toAccountId, amount);
     }
 
-    @GuardedBy("threadSafeTransfer()")
-    private void transferInternal(long fromAccountId, long toAccountId, BigDecimal amount) {
-        final Account fromAccount = getAccount(fromAccountId);
-        final Account toAccount = getAccount(toAccountId);
-
-        // this pre-check allows us to avoid extra database transaction: begin -> rollback in case of exceeded limit
-        if (!fromAccount.canWithdraw(amount)) {
-            throw new LimitExceededException(fromAccountId, amount, fromAccount.getAmount());
-        }
-
-        accountManager.transfer(fromAccount, toAccount, amount);
-    }
-
     private void threadSafeTransfer(long fromAccountId, long toAccountId, BigDecimal amount) {
         // locks are ordered to avoid deadlocks
         final long firstId;
@@ -124,5 +111,18 @@ public class AccountServiceImpl implements AccountService {
 
     private Lock getOrCreateLock(long accountId) {
         return locksByAccountId.getUnchecked(accountId);
+    }
+
+    @GuardedBy("threadSafeTransfer()")
+    private void transferInternal(long fromAccountId, long toAccountId, BigDecimal amount) {
+        final Account fromAccount = getAccount(fromAccountId);
+        final Account toAccount = getAccount(toAccountId);
+
+        // this pre-check allows us to avoid extra database transaction: begin -> rollback in case of exceeded limit
+        if (!fromAccount.canWithdraw(amount)) {
+            throw new LimitExceededException(fromAccountId, amount, fromAccount.getAmount());
+        }
+
+        accountManager.transfer(fromAccount, toAccount, amount);
     }
 }

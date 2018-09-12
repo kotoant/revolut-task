@@ -43,4 +43,24 @@ public class TransferRequest {
     public BigDecimal getAmount() {
         return amount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TransferRequest request = (TransferRequest) o;
+
+        if (from != request.from) return false;
+        if (to != request.to) return false;
+        return amount != null ? amount.equals(request.amount) : request.amount == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (from ^ (from >>> 32));
+        result = 31 * result + (int) (to ^ (to >>> 32));
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        return result;
+    }
 }
