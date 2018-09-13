@@ -1,5 +1,6 @@
 package task.rest;
 
+import com.codahale.metrics.annotation.Timed;
 import task.api.CreateAccountRequest;
 import task.api.CreateAccountResponse;
 import task.api.GetAccountResponse;
@@ -45,6 +46,7 @@ public class AccountResource {
      * @param request {@link CreateAccountRequest}
      * @return {@link Response} with Status.CREATED status and {@link CreateAccountResponse} entity in case of success.
      */
+    @Timed
     @POST
     @Path("/create")
     public Response create(@Valid @NotNull CreateAccountRequest request) {
@@ -58,6 +60,7 @@ public class AccountResource {
      * @param accountId account id
      * @return {@link Response} with Status.OK status and {@link GetAccountResponse} entity in case of success.
      */
+    @Timed
     @GET
     @Path("/{accountId}")
     public Response getAccount(@NotNull @PathParam("accountId") long accountId) {
@@ -71,6 +74,7 @@ public class AccountResource {
      * @param request {@link TransferRequest}
      * @return {@link Response} with Status.OK status and "OK" entity in case of success.
      */
+    @Timed
     @POST
     @Path("/transfer")
     public Response transfer(@Valid @NotNull TransferRequest request) {

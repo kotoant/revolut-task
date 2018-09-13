@@ -26,10 +26,17 @@ The build phase include unit tests:
 ```
 mvn clean verify
 ```
-
-### Running integration test
+Release project (generate sources and javadocs):
+```
+mvn -P release clean install
+```
+Running integration test:
 ```
 mvn -P integration-test clean verify
+```
+Whole release cycle with unit- and integration-tests with generating sources and javadocs:
+```
+mvn -P release,integration-test clean install
 ```
 
 ## Running the application
@@ -146,6 +153,7 @@ OK
 * Maven to build project
 * DropWizard for application bootstraping (provides Jetty server with Jersey REST framework)
 * Guice for dependeny injection
+* Guava for caching of locks
 * MyBatis for JDBC operations
 * mabytis-guice for proper handling of @Transactional methods
 * HSQLDB for In-Memory database
