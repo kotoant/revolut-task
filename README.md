@@ -109,3 +109,58 @@ The [healthcheck resource](http://localhost:8081/healthcheck) runs [the health c
 `database` here is the result of your `DatabaseHealthCheck`, which passed. `deadlocks` is a built-in health check which looks for deadlocked JVM threads and prints out a listing if any are found.
 
 ### REST API
+Account service exposes three operations: 1 GET method to get account by id and 2 POST methods: create and transfer:
+
+#### GET method: /accounts/{accountId}
+Sample request:
+```
+$ curl http://localhost:8080/accounts/1
+```
+Sample response:
+```
+{"accountId":1,"amount":123.45000000}
+```
+
+#### POST method: /accounts/create
+Sample request:
+```
+$ curl -H "Content-Type: application/json" -d '{"amount": 100.500}' http://localhost:8080/accounts/create
+```
+Sample response:
+```
+{"accountId":3}
+```
+
+#### POST method: /accounts/transfer
+Sample request:
+```
+$ curl -H "Content-Type: application/json" -d '{"from": 1, "to": 2, "amount": 3.45}' http://localhost:8080/accounts/transfer
+```
+Sample response:
+```
+OK
+```
+
+## Used Frameworks and Tools
+* Git as version control system
+* Maven to build project
+* DropWizard for application bootstraping (provides Jetty server with Jersey REST framework)
+* Guice for dependeny injection
+* MyBatis for JDBC operations
+* mabytis-guice for proper handling of @Transactional methods
+* HSQLDB for In-Memory database
+* JUnit, Mockito, AssertJ, Hamcrest for testing
+
+## Implementation Notes
+The implementation assumes that there is only one instance of system-writers to the database and it is the developed service.
+So all processing threads are correctly synchronized within this one service.
+
+If we want to complicate the solution and add at least one more instance of the service that can write to the database we should use synchronization on database level.
+For example optimistic locking can be used: when only updated row is locked. It can be achieved by adding one more filed to the table structure: version.
+So when we want to update the row we should always check its version.
+There is out-of-the-box solution for that from Hibernate.
+
+## Further Enhancement
+We can provide more dao methods for CRUD operations: getAllAccounts (with offset and/or limit), deleteById, etc.
+We can also add audit information to the database the will contain whole transfer log plus history for all accounts.
+There is Hibernate Envers module for that purpose.
