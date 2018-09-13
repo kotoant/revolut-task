@@ -137,4 +137,12 @@ public class Account {
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", amount=" + amount +
+                '}';
+    }
 }

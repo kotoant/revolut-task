@@ -2,6 +2,7 @@ package task.manager;
 
 import org.mybatis.guice.transactional.Transactional;
 import task.dao.AccountDao;
+import task.exception.NoSuchAccountException;
 import task.model.Account;
 
 import javax.inject.Inject;
@@ -32,9 +33,16 @@ public class AccountManager {
     @Transactional
     public void transfer(Account fromAccount, Account toAccount, BigDecimal amount) {
         fromAccount.withdraw(amount);
-        toAccount.deposit(amount);
+        safeUpdate(fromAccount);
 
-        accountDao.update(fromAccount);
-        accountDao.update(toAccount);
+        toAccount.deposit(amount);
+        safeUpdate(toAccount);
+    }
+
+    private void safeUpdate(Account account) {
+        final int nRows = accountDao.update(account);
+        if (nRows != 1) {
+            throw new NoSuchAccountException(account.getId());
+        }
     }
 }

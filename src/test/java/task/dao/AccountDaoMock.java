@@ -26,8 +26,13 @@ public class AccountDaoMock implements AccountDao {
     }
 
     @Override
-    public void update(Account account) {
-        accountsById.put(account.getId(), account);
+    public int update(Account account) {
+        final Account newValue = accountsById.computeIfPresent(account.getId(), (key, value) -> account);
+        if (newValue == null) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 
     @Override

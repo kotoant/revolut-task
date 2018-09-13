@@ -30,8 +30,9 @@ public interface AccountDao {
      * Update existing account with new amount value.
      *
      * @param account account
+     * @return number of updated rows: 1 when account exists, 0 otherwise
      */
-    void update(@Param("account") Account account);
+    int update(@Param("account") Account account);
 
     /**
      * Health-check.
