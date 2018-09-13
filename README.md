@@ -10,15 +10,18 @@ Java/Scala test task for Revolut.
 You can clone the repository using git with SSH:
 ```
 git clone git@github.com:kotoant/revolut-task.git
+cd revolut-task
 ```
 Or use HTTPS:
 ```
 git clone https://github.com/kotoant/revolut-task.git
+cd revolut-task
 ```
 Alternatively can just download [revolut-task-master.zip](https://github.com/kotoant/revolut-task/archive/master.zip) and unzip it:
 ```
 wget https://github.com/kotoant/revolut-task/archive/master.zip -O revolut-task-master.zip
 unzip revolut-task-master.zip
+cd revolut-task-master
 ```
 
 ## Build the project from the source code
